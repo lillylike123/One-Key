@@ -1,0 +1,752 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:"Fredoka",sans-serif;
+
+    background:
+    linear-gradient(
+        180deg,
+        #FFF8E8,
+        #FFF4D6
+    );
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
+}
+#app{
+    width:100%;
+    display:flex;
+    justify-content: center;
+}
+
+#gameWindow{
+    width:1200px;
+    height:720px;
+    background:white;
+    border-radius:30px;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns: 
+    280px
+    1fr
+    280px;
+    grid-template-rows:
+    70px
+    1fr;
+
+    box-shadow: 0 25px 60px rgba(0,0,0,.15);
+}
+
+#titleBar{
+    grid-column:1/4;
+    background:#FFE680;
+    display:flex;
+    align-items: center;
+    padding: 0 25px;
+    gap:20px;
+}
+
+#windowButtons{
+    display: flex;
+    gap:10px;
+}
+
+.circle{
+    width:16px;
+    height:16px;
+
+    border-radius:50%;
+}
+
+.red{
+    background:#FF6B6B;
+}
+
+.yellow{
+    background:#FFD93D;
+}
+
+.green{
+    background: #6BCB77;
+}
+
+#titleBar h1 {
+    font-size:28px;
+
+    color: #664400;
+}
+
+#leftPanel, #rightPanel{
+    background: #FFFDF8;
+    padding: 25px;
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+
+}
+
+#gameArea{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+    gap:25px;
+    background: #FFF8EE;
+
+
+}
+
+.infoCard{
+    background:white;
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 
+    0 10px 25px rgba(0, 0, 0, .08);
+
+
+}
+
+.infoCard h3,
+.infoCard h4{
+    color:#7A5700;
+    margin-bottom:12px;
+}
+
+.progressBar{
+    width:100%;
+    height:18px;
+    background:#EEE;
+    border-radius: 999px;
+    overflow:hidden;
+    margin:10px 0;
+}
+
+#happinessBar{
+    width:100%;
+    height: 100%;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #7ED957,
+        #A6F05A
+    );
+
+    transition: .35s;
+
+}
+
+#reactionBox{
+    width:340px;
+    height: 170px;
+    background: #E9E9E9;
+    border-radius:30px;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    font-size:58px;
+    font-weight:bold;
+    color:#666;
+    transition: .25s;
+    user-select:none;
+    
+
+}
+
+#reactionTime{
+
+    font-size:44px;
+    color:#444;
+}
+
+#instructionBox{
+    max-width:500px;
+    text-align:center;
+    font-size:22px;
+    line-height:1.6;
+    color:#666;
+}
+
+#statusMessage{
+
+    font-size:24px;
+    font-weight: 600;
+    color:#D18C00;
+}
+.stat{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin:10px 0;
+
+}
+
+.stat strong {
+    color:#FF9A00;
+}
+#historyList li{
+    padding: 8px 0;
+    border-bottom:1px solid #EEE;
+}
+
+#gameOverScreen{
+    position:fixed;
+    inset:0;
+    background: rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.overlayCard{
+    background:white;
+    padding:40px;
+    border-radius: 25px;
+    text-align: center;
+    width:420px;
+    box-shadow:
+
+    0 20px 60px rgba(0,0,0,.25);
+}
+
+.overlayCard h1{
+
+    font-size:72px;
+    margin-bottom:15px;
+    text-align:center;
+    justify-content: center ;
+}
+
+#screenFlash{
+    position:fixed;
+    inset:0;
+    background:white;
+    opacity:0;
+    pointer-events:none;
+    transition:.15s;
+}
+
+#duckContainer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    margin:20px 0;
+    min-height:220px;
+}
+
+#duck{
+    position:relative;
+
+    width:170px;
+    height:190px;
+
+    animation: idleBounce 2.8s ease-in-out infinite;
+    filter:drop-shadow(0 10px 12px rgba(0,0,0,.12));
+}
+
+#duckMood{
+
+    transition:.3s;
+
+}
+
+.duck-body{
+
+    position:absolute;
+
+    width: 120px;
+    height:90px;
+
+    background: #FFD84D;
+
+    border-radius: 50%;
+
+    bottom:25px;
+    left:25px;
+    
+    z-index:1;
+
+}
+
+.duck-head{
+
+    position:absolute;
+    width:95px;
+    height:95px;
+
+    background: #FFD84D;
+
+    border-radius: 50%;
+
+    top:20px;
+    left:27px;
+
+    z-index:3;
+}
+
+.eye{
+
+    position:absolute;
+    width:11px;
+    height:16px;
+
+    background:#222;
+
+    border-radius:999px;
+    top:30px;
+
+    animation: blink 5s infinite;
+}
+
+.leftEye{
+
+    left:24px;
+
+}
+
+.rightEye{
+    right:24px;
+
+}
+
+.eye::after{
+    content:"";
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:white;
+    border-radius: 50%;
+
+    left:2px;
+    top:2px;
+}
+
+.beak{
+    position:absolute;
+
+    width:30px;
+    height:18px;
+
+    background: #FF9640;
+
+    border-radius: 25px;
+
+    left: 50%;
+    top: 52px;
+    transform: translateX(-50%);
+
+
+}
+
+.blush{
+    position:absolute;
+
+    width:14px;
+    height:9px;
+
+    background: #FFB5CB;
+
+    border-radius:50%;
+
+    top:52%;
+
+    opacity:.9;
+}
+.leftBlush{
+    left:8px;
+
+}
+
+.rightBlush{
+    right:8px;
+}
+
+.wing {
+    position:absolute;
+    width:38px;
+    height:58px;
+
+    background:#FFE77E;
+
+    border-radius:50%;
+
+    top:18px;
+}
+
+.leftWing{
+    left:-10px;
+
+    transform:rotate(-25deg);
+
+    animation: leftWing 2s ease-in-out infinite;
+}
+
+.rightWing{
+
+    right:-10px;
+
+    transform:rotate(25deg);
+
+    animation:rightWing 2s ease-in-out infinite;
+
+}
+
+.foot{
+
+    position:absolute;
+
+    width:22px;
+    height:10px;
+
+    background:#FF9640;
+
+    border-radius:20px;
+
+    bottom:-8px;
+}
+
+.leftFoot {
+
+    left:28px;
+
+}
+
+.rightFoot {
+    right:28px;
+}
+
+@keyframes idleBounce{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-6px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+
+
+}
+
+@keyframes blink{
+
+    0%,46%,48%,100%{
+        transform:scaleY(1);
+    }
+
+    47%{
+        transform:scaleY(.08)
+    }
+
+    47%{
+        transform:scaleY(.08);
+    }
+}
+
+@keyframes leftWing{
+    0%, 100%{
+        transform:rotate(-25deg);
+    }
+    50%{
+        transform:rotate(-38deg);
+    }
+}
+
+@keyframes rightWing{
+
+    0%, 100%{
+        transform:rotate(25deg);
+    }
+
+    50%{
+        transform:rotate(38deg);
+    }
+}
+
+#duck{
+    transition:.3s;
+    
+}
+
+#duck:hover{
+        transform:scale(1.05);
+    }
+
+#duck.happy{
+    animation:
+   happyBounce .45s infinite;
+
+}
+
+@keyframes happyBounce{
+    0%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-14px);
+    }
+    100%{
+        transform:translateY(0);
+    }
+}
+
+
+@keyframes happyWing{
+    from{
+        transform:rotate(-40deg);
+    }
+    to{
+        transform:rotate(-8deg);
+    }
+}
+
+#duck.sad{
+    animation:none;
+
+    transform:translateY(10px);
+}
+
+#duck.sad .eye{
+    transform:
+     scaleY(.4);
+}
+
+#duck.sad .wing{
+    transform:rotate(0deg);
+}
+
+#duck.sad::after{
+    content:"💧";
+
+    position:absolute;
+
+    right:-10px;
+    top:35px;
+
+    font-size: 18px;
+    animation: tear 1.4s infinite;
+
+}
+
+@keyframes tear{
+    from{
+        transform:
+        translateY(0);
+
+        opacity:1;
+    }
+
+    to{
+        transform:
+        translateY(30px);
+
+        opacity:0;
+    }
+}
+
+#duck.dead{
+
+    animation:none;
+
+    filter:grayscale(100%);
+
+    transform: rotate(90deg);
+}
+
+#duck.dead .eye{
+    background:transparent;
+}
+
+#duck.dead .eye::before{
+    content:"X";
+
+    position:absolute;
+
+    left:-3px;
+    top:-5px;
+
+    font-size:18px;
+
+    color:#222;
+}
+
+#duck.dead .eye::after{
+
+    display:none;
+}
+
+#duck.shake{
+    animation:
+    shake .3s;
+
+}
+
+@keyframes shake{
+
+    0%{
+        transform:translateX(0);
+    }
+    20%{
+        transform:translateX(-5px);
+    }
+   40%{
+        transform:translateX(5px);
+    }
+
+    60%{
+        transform:translateX(-5px);
+    }
+
+    80%{
+        transform:translateX(5px);
+    }
+
+    100%{
+        transform:translateX(0);
+    }
+
+}
+
+#duck.happy::before{
+    content:"💛";
+
+    position:absolute;
+
+    top:-22px;
+    left:50%;
+
+    transform: translateX(-50%);
+
+    font-size:20px;
+
+    animation:
+    heartFloat 1s infinite;
+}
+
+@keyframes heartFloat{
+
+    from{
+
+        opacity:0;
+
+        transform:translate(-50%,0)
+        scale(.5);
+    }
+    50%{
+        opacity:1;
+    }
+    to{
+        opacity:0;
+
+        transform:
+        translate(-50%,-28px)
+        scale(1.2);
+    }
+}
+
+.ready{
+
+    background:#DCDCDC !important;
+    color:#666 !important; 
+}
+
+.wait{
+    background: #FFE082 !important;
+    color: #8A5A00 !important; 
+}
+
+.go{
+    background: #72E27E !important;
+    color:white !important;
+
+    animation: pulse .5s infinite alternate;
+}
+
+.good{
+    background:#6EC6FF !important;
+    color: white !important;
+}
+
+.bad{
+    background: #FF8A80 !important;
+    color:white !important;
+}
+@keyframes pulse{
+    from{
+        transform:scale(1);
+    }
+
+    to{
+
+        transform:scale(1.04);    }
+}
+
+#happinessBar{
+
+    transition: 
+    width .3s ease,
+    background .3s ease;
+
+
+}
+
+.low{
+    background: #DD6B6B !important;
+}
+
+.medium{
+    background:#FFD54F !important;
+}
+.high{
+
+    background:#7ED957 !important;
+
+}
+#gameOverScreen h2{
+
+    color: #444;
+    margin-bottom:15px;
+}
+
+.restartText{
+    margin-top:20px;
+    font-weight:bold;
+    color: #FF9800;
+    animation:
+    blinkText 1s infinite;
+}
+
+@keyframes blinkText {
+    50%{
+        opacity:.4;
+    }
+}
+
+

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Duck Reaction Trainer</title>
+   <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+   <div id="app">
+
+   <main id="gameWindow">
+      <header id="titleBar">
+         <div id="windowButtons">
+            <span class="circle red"></span>
+            <span class="circle yellow"></span>
+            <span class="circle green"></span>
+         </div>
+
+         <h1>
+            Duck Reaction Trainer!!!
+         </h1>
+      </header>
+
+      <aside id="leftPanel">
+         <h2>Ducky</h2>
+         <div id="duckContainer">
+            <div id="duck">
+               <div class="duck-head">
+                  <div class="eye leftEye"></div>
+                  <div class="eye rightEye"></div>
+
+
+                  <div class="beak"></div>
+                  <div class="blush leftBlush"></div>
+                     <div class="blush rightBlush"></div>
+</div>
+                  <div class="duck-body">
+                     <div class="wing leftWing"></div>
+                     <div class="wing rightWing"></div>
+
+                     <div class="foot leftFoot"></div>
+                     <div class="foot rightFoot"></div>
+                  </div>
+               </div>
+               </div>
+   
+            <h3 id="duckMood">
+
+               😊 Happy
+
+            </h3>
+            <section class="infoCard">
+               <h4>Happiness</h4>
+               <div class="progressBar">
+                  <div id="happinessBar"></div>
+               </div>
+               <p><span id="happinessValue">100</span> /100 </p>
+            </section>
+      </aside>
+
+      <section id="gameArea">
+         <div id="instructionBox">
+
+            Welcome!
+
+            <br><br>
+
+            Press
+            <strong>SPACE</strong>
+            to begin.
+
+         </div>
+
+         <div id="reactionBox">
+
+            Ready!!!
+
+         </div>
+
+         <div id="reactionTime">
+            -- ms
+         </div>
+
+         <div id="statusMessage">
+
+            Waiting...
+
+         </div>
+      </section>
+
+      <aside id="rightPanel">
+         <section class="infoCard">
+            <h3>Statistics</h3>
+            <div class="stat">
+               <span>Best Time</span>
+               <strong id="bestTime">-- ms</strong>
+            </div>
+            <div class="stat">
+               <span>Average</span>
+               <strong id="averageTime">-- ms</strong>
+            </div>
+            <div class="stat">
+               <span>Last Time</span>
+               <strong id="lastTime">-- ms</strong>
+            </div>
+            <div class="stat">
+               <span>Correct</span>
+               <strong id="correctCount">0</strong>
+            </div>
+
+            <div class="stat">
+               <span>Wrong</span>
+               <strong id="wrongCount">0</strong>
+            </div>
+            <div class="stat">
+               <span>Rounds</span>
+               <strong id="roundCount">0</strong>
+            </div>
+         </section>
+
+         <section class="infoCard">
+            <h3>Recent Attempts</h3>
+
+            <ul id="historyList">
+               <li>Nothing yet</li>
+            </ul>
+         </section>
+         <section class="infoCard"> <h3>Controls</h3>
+         <p>
+            <strong>SPACE</strong> is the only key used in this game.
+         </p>
+         
+         <p>
+            Wait for <strong>GO!</strong> before pressing.
+         </p>
+
+         <p>
+
+            React quickly to keep Duck happy!
+         </p>
+      </section>
+      </aside>
+   </main>
+   </div>
+</div>
+
+<div id="gameOverScreen" class="hidden">
+   <div class="overlayCard">
+      <h1>💀</h1>
+      <h2>Duck Lost All Happiness</h2>
+
+      <p>
+         Better luck next time.
+      </p>
+
+      <p class="restartText">
+         Press SPACE to Restart
+      </p>
+   </div>
+</div>
+
+<div id="screenFlash"></div>
+<script src="script.js"></script>
+
+</body>
+</html>
+
