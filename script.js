@@ -18,6 +18,20 @@ const happinessValue = document.getElementById("happinessValue");
 
 const historyList = document.getElementById("historyList");
 
+const savedBestTime = localStorage.getItem("duckBestTime");
+if (savedBestTime) {
+    besttTime = parseInt(savedBestTime);
+    bestTimeText.textContent = bestTime + " ms";
+}
+
+const successSound = new Audio('quak.mp3');
+const failSound = new Audio ('fail.mp3');
+const quackSound = new Audio('quak.mp3');
+
+const comboCountText = document.getElementById("comboCount");
+
+
+let combo = 0;
 let happiness = 100;
 
 let correct = 0;
@@ -35,7 +49,7 @@ let timeoutID = null;
 let rounds = 0;
 let bestTime = Infinity;
 
-let bestTimeText = document.getElementById("bestTime");
+
 
 function startRound() {
 
@@ -81,7 +95,7 @@ function showGo(){
         roundCountText.textContent = rounds;
 
         happiness =
-            Math.max(0,happiness = 10);
+            Math.max(0,happiness - 10);
 
         updateHappiness();
 
@@ -112,6 +126,14 @@ function react(){
 
     const reactionTime =
         Math.round(performance.now() - startTime);
+    
+    if(reactionTime > 800) {
+        combo = 0;
+        happiness = Math.max(0, happiness -5);
+        failSound.play();
+    }
+
+    updateHappiness();
 
     rounds++;
     correct++;
@@ -137,19 +159,23 @@ function react(){
         bestTimeText.textContent =
             reactionTime + " ms";
 
+        localStorage.setItem("duckBestTime", bestTime);
+
     }
 
     if(reactionTime < 250){
-
+        combo++;
         happiness =
             Math.min(100,happiness + 5);
+        
+            successSound.play();
 
     }
 
     else{
-
+        combo = 0;
         happiness =
-            Math.max(0,happiness - 5);
+            Math.min(100, happiness + 0);
 
     }
 
@@ -173,20 +199,16 @@ function react(){
         "Nice!";
 
 }
-document.addEventListener("keydown", function(event) {
-    if(event.code !== "Space")
-        return;
 
+    Document.addEventListener("keydown", function(event) {
+    if(event.code !== "Space") return;
     event.preventDefault();
 
+    quackSound.currentTime = 0;
+    quackSound.play();
+
     if(gameOver){
-
-    restartGame();
-    return;
-
-}
-    if (!gameStarted) {
-        startRound();
+        restartGame();
         return;
     }
 
@@ -195,43 +217,29 @@ document.addEventListener("keydown", function(event) {
         return;
     }
 
-    if (!waitingForGo){
+    if(waitingForGo) {
         clearTimeout(timeoutID);
+        waitingForGo = false;
 
         wrong++;
         rounds++;
-
-        wrongCountText.textContent = wrong;
+        wrongCountText.textContent=wrong;
         roundCountText.textContent = rounds;
-
-        happiness =
-        Math.max(0,happiness -15);
-
+        happiness = Math.max(0, happiness - 15);
         updateHappiness();
-
         checkGameOver();
-
         setDuckMood("sad");
-
-        addHistory(" False Start");
-
-        reactionBox.textContent =
-        "TOO EARLY!";
-
+        addHistory("False Start");
+        reactionBox.textContent = "TOO EARLY!";
         reactionBox.className = "bad";
-
-        instructionBox.textContent =
-        "Press SPACE to try again. ";
-
-        statusMessage.textContent =
-        "Oops!";
-
-        waitingForGo = false;
-
+        instructionBox.textContent = "Press SPACE to try again.";
+        statusMessage.textContent = "Oops!"
+        combo = 0;
         return;
     }
+
     startRound();
-});
+})
 
 function setDuckMood(mood){
     
@@ -317,7 +325,7 @@ function checkGameOver(){
     reactionBox.className = "bad";
 
     statusMessage.textContent =
-    "Duck lost ALL happiness because of YOU!!!";
+    "Ducky lost ALL happiness because of YOU!!!";
 
     gameOverScreen.classList.remove("hidden");
 }
@@ -365,3 +373,11 @@ function restartGame(){
     gameOverScreen.classList.add("hidden");
 
 }
+
+
+if (combo >= 5) {
+    statusMessage.textContent = "<3 ON FIRE";
+    duck.classList.add("shake");
+}
+
+  
