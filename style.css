@@ -95,6 +95,7 @@ body{
     display:flex;
     flex-direction: column;
     gap:20px;
+    overflow-y: auto;
 
 }
 
@@ -749,4 +750,11 @@ body{
     }
 }
 
-
+.has-glasses::after{
+    content: "🕶️";
+    position:absolute;
+    top: 45px;
+    left: 40px;
+    font-size: 20px;
+    z-index: 10;
+}

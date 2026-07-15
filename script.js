@@ -18,18 +18,18 @@ const happinessValue = document.getElementById("happinessValue");
 
 const historyList = document.getElementById("historyList");
 
-const savedBestTime = localStorage.getItem("duckBestTime");
-if (savedBestTime) {
-    besttTime = parseInt(savedBestTime);
-    bestTimeText.textContent = bestTime + " ms";
-}
+const coinCountText= document.getElementById("coinCount");
+const buyGlassesBtn = document.getElementById("buyGlasses");
 
-const successSound = new Audio('quak.mp3');
+const successSound = new Audio('win.mp3');
 const failSound = new Audio ('fail.mp3');
-const quackSound = new Audio('quak.mp3');
+const quackSound = new Audio('quack.mp3');
+const deathSound = new Audio('death.mp3')
 
 const comboCountText = document.getElementById("comboCount");
 
+let duckCoins = 0;
+let bestTime = Infinity;
 
 let combo = 0;
 let happiness = 100;
@@ -47,9 +47,17 @@ let startTime = 0;
 let timeoutID = null;
 
 let rounds = 0;
-let bestTime = Infinity;
 
+const savedBestTime = localStorage.getItem("duckBestTime");
+if (savedBestTime) {
+    bestTime = parseInt(savedBestTime);
+    bestTimeText.textContent = bestTime + " ms";
+}
 
+const hasGlasses = localStorage.getItem("hasGlasses");
+if (hasGlasses === "true") {
+    duck.classList.add("has-glasses");
+}
 
 function startRound() {
 
@@ -102,6 +110,8 @@ function showGo(){
         setDuckMood("sad");
 
         addHistory("🐢 Too Slow");
+
+        failSound.play();
 
         reactionBox.textContent =
             "TOO SLOW";
@@ -163,7 +173,9 @@ function react(){
 
     }
 
-    if(reactionTime < 250){
+    if(reactionTime < 450){
+        duckCoins++;
+        coinCountText.textContent = duckCoins;
         combo++;
         happiness =
             Math.min(100,happiness + 5);
@@ -200,7 +212,7 @@ function react(){
 
 }
 
-    Document.addEventListener("keydown", function(event) {
+    document.addEventListener("keydown", function(event) {
     if(event.code !== "Space") return;
     event.preventDefault();
 
@@ -235,6 +247,7 @@ function react(){
         instructionBox.textContent = "Press SPACE to try again.";
         statusMessage.textContent = "Oops!"
         combo = 0;
+        failSound.play();
         return;
     }
 
@@ -285,12 +298,19 @@ function updateHappiness(){
 
         happinessBar.classList.add("low");
     }
+
+    
+    if (combo >= 5) {
+        statusMessage.textContent = "<3 ON FIRE";
+        duck.classList.add("shake");
+    }
+  
 }
 
 function addHistory(text){
     const item = document.createElement("li");
 
-    item.textContent = text;
+    item.textContent = text; 
 
     historyList.prepend(item);
 
@@ -328,6 +348,8 @@ function checkGameOver(){
     "Ducky lost ALL happiness because of YOU!!!";
 
     gameOverScreen.classList.remove("hidden");
+
+    deathSound.play();
 }
 
 function restartGame(){
@@ -374,10 +396,13 @@ function restartGame(){
 
 }
 
-
-if (combo >= 5) {
-    statusMessage.textContent = "<3 ON FIRE";
-    duck.classList.add("shake");
-}
-
-  
+buyGlassesBtn.addEventListener("click", () => {
+    if (duckCoins >= 10) {
+        duckCoins -= 10;
+        coinCountText.textContent = duckCoins;
+        duck.classList.add("has-glasses");
+        localStorage.setItem("hasGlasses", "true");
+    } else {
+        alert("Not enough coins!");
+    }
+}); 
