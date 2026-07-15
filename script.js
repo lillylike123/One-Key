@@ -109,7 +109,7 @@ function showGo(){
 
         setDuckMood("sad");
 
-        addHistory("🐢 Too Slow");
+        addHistory("Too Slow!");
 
         failSound.play();
 

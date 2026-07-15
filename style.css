@@ -47,7 +47,7 @@ body{
     70px
     1fr;
 
-    box-shadow: 0 25px 60px rgba(0,0,0,.15);
+    
 }
 
 #titleBar{
@@ -114,8 +114,8 @@ body{
     background:white;
     border-radius: 20px;
     padding: 18px;
-    box-shadow: 
-    0 10px 25px rgba(0, 0, 0, .08);
+    border: black;
+    border-width: 2px;
 
 
 }
@@ -227,9 +227,7 @@ body{
     border-radius: 25px;
     text-align: center;
     width:420px;
-    box-shadow:
-
-    0 20px 60px rgba(0,0,0,.25);
+    border-width: 2px;
 }
 
 .overlayCard h1{
@@ -757,4 +755,15 @@ body{
     left: 40px;
     font-size: 20px;
     z-index: 10;
+}
+
+button {
+
+    background-color: rgb(255, 255, 131);
+    color: black;
+     font-family:"Fredoka",sans-serif;
+     border-radius: 10%;
+     border: none;
+     font-size: 15px;
+     margin-top: 10px;
 }
